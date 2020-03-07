@@ -12,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 )
 
-// Serialized acceptance tests due to WAF account limits
+// Serialized acceptance tests due to WAFV2 account limits
 // https://docs.aws.amazon.com/waf/latest/developerguide/limits.html
 func TestAccAWSWafv2RegexPatternSet(t *testing.T) {
 	testCases := map[string]func(t *testing.T){
@@ -165,7 +165,7 @@ func testAccCheckAWSWafv2RegexPatternSetExists(n string, v *wafv2.RegexPatternSe
 		}
 
 		if rs.Primary.ID == "" {
-			return fmt.Errorf("No WAF Regex Pattern Set ID is set")
+			return fmt.Errorf("No WAFV2 Regex Pattern Set ID is set")
 		}
 
 		conn := testAccProvider.Meta().(*AWSClient).wafv2conn
@@ -184,7 +184,7 @@ func testAccCheckAWSWafv2RegexPatternSetExists(n string, v *wafv2.RegexPatternSe
 			return nil
 		}
 
-		return fmt.Errorf("WAF Regex Pattern Set (%s) not found", rs.Primary.ID)
+		return fmt.Errorf("WAFV2 Regex Pattern Set (%s) not found", rs.Primary.ID)
 	}
 }
 
@@ -203,7 +203,7 @@ func testAccCheckAWSWafv2RegexPatternSetDestroy(s *terraform.State) error {
 
 		if err == nil {
 			if *resp.RegexPatternSet.Id == rs.Primary.ID {
-				return fmt.Errorf("WAF Regex Pattern Set %s still exists", rs.Primary.ID)
+				return fmt.Errorf("WAFV2 Regex Pattern Set %s still exists", rs.Primary.ID)
 			}
 		}
 

@@ -25,7 +25,7 @@ func resourceAwsWafv2RegexPatternSet() *schema.Resource {
 			State: func(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 				idParts := strings.Split(d.Id(), "/")
 				if len(idParts) != 3 || idParts[0] == "" || idParts[1] == "" || idParts[2] == "" {
-					return nil, fmt.Errorf("Unexpected format of ID (%q), expected ID/NAME/SCOPE", d.Id())
+					return nil, fmt.Errorf("unexpected format of ID (%q), expected ID/NAME/SCOPE", d.Id())
 				}
 				id := idParts[0]
 				name := idParts[1]
@@ -78,7 +78,7 @@ func resourceAwsWafv2RegexPatternSetCreate(d *schema.ResourceData, meta interfac
 	conn := meta.(*AWSClient).wafv2conn
 	var resp *wafv2.CreateRegexPatternSetOutput
 
-	log.Printf("[INFO] Creating WAF V2 Regex Pattern Set: %s", d.Get("name").(string))
+	log.Printf("[INFO] Creating WAFV2 Regex Pattern Set: %s", d.Get("name").(string))
 
 	params := &wafv2.CreateRegexPatternSetInput{
 		Name:                  aws.String(d.Get("name").(string)),
@@ -105,16 +105,16 @@ func resourceAwsWafv2RegexPatternSetCreate(d *schema.ResourceData, meta interfac
 		var err error
 		resp, err = conn.CreateRegexPatternSet(params)
 		if err != nil {
-			if isAWSErr(err, wafv2.ErrCodeWAFInternalErrorException, "AWS WAF couldn’t perform the operation because of a system problem") {
+			if isAWSErr(err, wafv2.ErrCodeWAFInternalErrorException, "AWS WAFV2 couldn’t perform the operation because of a system problem") {
 				return resource.RetryableError(err)
 			}
 			if isAWSErr(err, wafv2.ErrCodeWAFTagOperationException, "An error occurred during the tagging operation") {
 				return resource.RetryableError(err)
 			}
-			if isAWSErr(err, wafv2.ErrCodeWAFTagOperationInternalErrorException, "AWS WAF couldn’t perform your tagging operation because of an internal error") {
+			if isAWSErr(err, wafv2.ErrCodeWAFTagOperationInternalErrorException, "AWS WAFV2 couldn’t perform your tagging operation because of an internal error") {
 				return resource.RetryableError(err)
 			}
-			if isAWSErr(err, wafv2.ErrCodeWAFOptimisticLockException, "AWS WAF couldn’t save your changes because you tried to update or delete a resource that has changed since you last retrieved it") {
+			if isAWSErr(err, wafv2.ErrCodeWAFOptimisticLockException, "AWS WAFV2 couldn’t save your changes because you tried to update or delete a resource that has changed since you last retrieved it") {
 				return resource.RetryableError(err)
 			}
 			return resource.NonRetryableError(err)
@@ -220,10 +220,10 @@ func resourceAwsWafv2RegexPatternSetUpdate(d *schema.ResourceData, meta interfac
 		_, err = conn.UpdateRegexPatternSet(u)
 
 		if err != nil {
-			if isAWSErr(err, wafv2.ErrCodeWAFInternalErrorException, "AWS WAF couldn’t perform the operation because of a system problem") {
+			if isAWSErr(err, wafv2.ErrCodeWAFInternalErrorException, "AWS WAFV2 couldn’t perform the operation because of a system problem") {
 				return resource.RetryableError(err)
 			}
-			if isAWSErr(err, wafv2.ErrCodeWAFOptimisticLockException, "AWS WAF couldn’t save your changes because you tried to update or delete a resource that has changed since you last retrieved it") {
+			if isAWSErr(err, wafv2.ErrCodeWAFOptimisticLockException, "AWS WAFV2 couldn’t save your changes because you tried to update or delete a resource that has changed since you last retrieved it") {
 				return resource.RetryableError(err)
 			}
 			return resource.NonRetryableError(err)
@@ -280,10 +280,10 @@ func resourceAwsWafv2RegexPatternSetDelete(d *schema.ResourceData, meta interfac
 		})
 
 		if err != nil {
-			if isAWSErr(err, wafv2.ErrCodeWAFInternalErrorException, "AWS WAF couldn’t perform the operation because of a system problem") {
+			if isAWSErr(err, wafv2.ErrCodeWAFInternalErrorException, "AWS WAFV2 couldn’t perform the operation because of a system problem") {
 				return resource.RetryableError(err)
 			}
-			if isAWSErr(err, wafv2.ErrCodeWAFOptimisticLockException, "AWS WAF couldn’t save your changes because you tried to update or delete a resource that has changed since you last retrieved it") {
+			if isAWSErr(err, wafv2.ErrCodeWAFOptimisticLockException, "AWS WAFV2 couldn’t save your changes because you tried to update or delete a resource that has changed since you last retrieved it") {
 				return resource.RetryableError(err)
 			}
 			return resource.NonRetryableError(err)
