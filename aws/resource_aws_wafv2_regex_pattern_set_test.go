@@ -80,6 +80,7 @@ func testAccAWSWafv2RegexPatternSet_changePatterns(t *testing.T) {
 				Check: resource.ComposeAggregateTestCheckFunc(
 					testAccCheckAWSWafv2RegexPatternSetExists(resourceName, &before),
 					resource.TestCheckResourceAttr(resourceName, "name", patternSetName),
+					resource.TestCheckResourceAttr(resourceName, "description", patternSetName),
 					resource.TestCheckResourceAttr(resourceName, "regular_expression_list.#", "2"),
 				),
 			},
@@ -88,6 +89,7 @@ func testAccAWSWafv2RegexPatternSet_changePatterns(t *testing.T) {
 				Check: resource.ComposeAggregateTestCheckFunc(
 					testAccCheckAWSWafv2RegexPatternSetExists(resourceName, &after),
 					resource.TestCheckResourceAttr(resourceName, "name", patternSetName),
+					resource.TestCheckResourceAttr(resourceName, "description", patternSetName),
 					resource.TestCheckResourceAttr(resourceName, "regular_expression_list.#", "3"),
 				),
 			},
