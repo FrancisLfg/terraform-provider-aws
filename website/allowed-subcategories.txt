@@ -57,6 +57,7 @@ GuardDuty
 IAM
 Inspector
 IoT
+IoTAnalytics
 KMS
 Kinesis Firehose
 Kinesis
